@@ -1,0 +1,163 @@
+# sks数据集路径
+dataset_path: /home/harold/Projects/localization/semanticPR/ssgm_on_semantic_kitti/data/dataset
+dataset_path_1: /home/tang/research/SSGM-outdoor/SSGM-on-Semantic-KITTI
+dataset_path_2: /media/zhong/JIA/Temp/kitti/05
+# sk序列号，会挨个遍历
+seq_list: [5]       # seq_list: [0]       
+# 两次调用get_semantic_array时的步长
+idx_step: 30
+
+# 显示聚类的bbox
+use_vis_cluster: False
+# 需要显示聚类bbox的语义
+vis_cluster_sem_used_list: []
+# 显示语义实例点云
+use_vis_inst_cloud: True
+# 是否打印一些信息
+use_print_screen: False
+
+# seamantic kitti 的语义标号到字符串
+sem2str_sk:
+  0: unlabeled
+  1: outlier
+  10: car
+  11: bicycle
+  13: bus
+  15: motorcycle
+  16: on-rails
+  18: truck
+  20: other-vehicle
+  30: person
+  31: bicyclist
+  32: motorcyclist
+  40: road
+  44: parking
+  48: sidewalk
+  49: other-ground
+  50: building
+  51: fence
+  52: other-structure
+  60: lane-marking
+  70: vegetation
+  71: trunk
+  72: terrain
+  80: pole
+  81: traffic-sign
+  99: other-object
+  252: moving-car
+  253: moving-bicyclist
+  254: moving-person
+  255: moving-motorcyclist
+  256: moving-on-rails
+  257: moving-bus
+  258: moving-truck
+  259: moving-other-vehicle
+
+# 采用的语义 的语义标号到字符串
+sem2str_used:
+  0: car
+  1: truck
+  2: other-vehicle
+  3: sidewalk
+  4: other-ground
+  5: building
+  6: fence
+  7: vegetation
+  8: trunk
+  9: terrain
+  10: pole
+  11: traffic-sign
+
+# semantic kitti到采用的语义的映射，没有映射的语义不使用
+# 如果不再需要某些语义则直接注释掉对应的一行也可以
+map_sk2used:
+  10: 0    # "car" -- "car"
+  13: 2    # "bus" -- "other-vehicle"
+  16: 2    # "on-rails" -- "other-vehicle"
+  18: 1    # "truck" -- "truck"
+  20: 2    # "other-vehicle" -- "other-vehicle"
+  48: 3    # "sidewalk" -- "sidewalk"
+  49: 4    # "other-ground" -- "other-ground"
+  50: 5    # "building" -- "building"
+  51: 6    # "fence" -- "fence"
+  70: 7    # "vegetation" -- "vegetation"
+  71: 8    # "trunk" -- "trunk"
+  72: 9    # "terrain" -- "terrain"
+  80: 10   # "pole" -- "pole"
+  81: 11   # "traffic-sign" -- "traffic-sign"
+
+# 聚类体素降采样体素大小
+voxel_size: 0.2
+# 对于已有实例信息的点云是否进行体素降采样
+use_voxel_in_sk_insts: True
+# 是否要求类的点数大过阈值才采用
+use_cluster_min_pts: True
+# sk聚类参数
+sem_used2cluster_param:
+  0: # car, tuned, good
+    dbscan_eps: 0.4
+    dbscan_min_pts: 7
+    cluster_min_pts: 40
+  1: # truck, untuned, nothing need clustering in seq 1
+    dbscan_eps: 0.4
+    dbscan_min_pts: 7
+    cluster_min_pts: 40
+  2: # other-vehicle, tuned, nothing need clustering in seq 1
+    dbscan_eps: 0.4
+    dbscan_min_pts: 7
+    cluster_min_pts: 40
+  3: # sidewalk, tuned, good
+    dbscan_eps: 1.5
+    dbscan_min_pts: 10
+    cluster_min_pts: 100
+  4: # other-ground, untuned, very few
+    dbscan_eps: 1.5
+    dbscan_min_pts: 10
+    cluster_min_pts: 100
+  5: # building, tuned, good
+    dbscan_eps: 1.5
+    dbscan_min_pts: 20
+    cluster_min_pts: 150
+  6: # fence, tuned, few
+    dbscan_eps: 1
+    dbscan_min_pts: 10
+    cluster_min_pts: 20
+  7: # vegetation, tuned, chaotic
+    dbscan_eps: 0.5
+    dbscan_min_pts: 20
+    cluster_min_pts: 200
+  8: # trunk, tuned, good
+    dbscan_eps: 0.5
+    dbscan_min_pts: 6
+    cluster_min_pts: 10
+  9: # terrain, tuned, few
+    dbscan_eps: 2
+    dbscan_min_pts: 50
+    cluster_min_pts: 60
+  10: # pole, tuned, good
+    dbscan_eps: 1
+    dbscan_min_pts: 5
+    cluster_min_pts: 5
+  11: # traffic-sign, tuned, good
+    dbscan_eps: 1
+    dbscan_min_pts: 10
+    cluster_min_pts: 10
+
+sem_used2color:
+  - [0.0, 0.2, 0.6]  # car, 蓝色#003296
+  - [0.7, 0.7, 0.2]  # truck, 黄色#b3b300
+  - [0.2, 0.2, 0.2]  # other-vehicle, 黑色#333333
+  - [0.6, 0.6, 0.6]  # sidewalk, 灰色#999999
+  - [0.7, 0.4, 0.1]  # other-ground, 土黄色#b37400
+  - [0.5, 0.5, 0.7]  # building, 灰蓝色#8080b3
+  - [0.4, 0.8, 0.9]  # fence, 天蓝色#66ccff
+  - [0.1, 0.8, 0.1]  # vegetation, 绿色#1aff1a
+  - [0.6, 0.3, 0.0]  # trunk, 棕色#994d00
+  - [0.8, 0.3, 0.8]  # terrain, 紫色#cc33cc
+  - [0.9, 0.9, 0.9]  # pole, 白色#ffffff
+  - [0.9, 0.2, 0.2]  # traffic-sign, 红色#ff3333
+
+ground_dist_thresh: 0.4   #0.4
+ground_ransac_n: 3
+ground_num_iter: 100     #100
+ground_probability: 0.999
