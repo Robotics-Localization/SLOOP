@@ -17,3 +17,5 @@ We provide the semantic kitti 07 dataset here:   [semantic_kitti-07](https://dri
 
 change the 'dataset_path' in config/sk_preprocess.yaml to 'your dataset path'.
 
+## Result Files
+/neg100 save the result files corresponding to Ours-SK in Fig. 5.
