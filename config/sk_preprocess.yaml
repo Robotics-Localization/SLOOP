@@ -3,7 +3,7 @@ dataset_path: /home/harold/Projects/localization/semanticPR/ssgm_on_semantic_kit
 dataset_path_1: /home/tang/research/SSGM-outdoor/SSGM-on-Semantic-KITTI
 dataset_path_2: /media/zhong/JIA/Temp/kitti/05
 # sk序列号，会挨个遍历
-seq_list: [5]       # seq_list: [0]       
+seq_list: [7]       # seq_list: [0]       
 # 两次调用get_semantic_array时的步长
 idx_step: 30
 
