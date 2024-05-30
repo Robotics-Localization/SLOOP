@@ -68,9 +68,9 @@ theta_threshold = 2      #degree  8
 fai_threshold_1 = 2       #degree  8
 # fai_threshold_2 = 4      #degree  
 distance_threshold = 15    #the distance threshold for measure the local features of selected vertex pairs
-# local_dis_feature_threshold_1 = 3  # threshold of the local distance features: 构建顶点对
-# local_dis_feature_threshold_2 = 5  # threshold of the local distance features：选二阶矩阵最好的
-local_semantic_feature_threshold_ = 0.95         #这个也能用   0.95
+# local_dis_feature_threshold_1 = 3  # threshold of the local distance features: 
+# local_dis_feature_threshold_2 = 5  # threshold of the local distance features
+local_semantic_feature_threshold_ = 0.95         #   0.95
 angle_interval =3 # angle sample interval for selecting axes 
 
 vector_z_axis_src = [] ;  vector_x_axis_src = [] ;  vector_y_axis_src = []     #three axes
@@ -225,7 +225,7 @@ def plot_ax_parameter(only_show_once, ax_num):
     ax_num.set_xlabel('X')  
     ax_num.set_ylabel('Y')  
     ax_num.set_zlabel('Z')  
-    ax_num.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0 ）          
+    ax_num.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0         
     if not only_show_once :      
         # plt.savefig(str(frame)+".png")
         fig.canvas.draw() #update
@@ -242,8 +242,8 @@ def plot_ax_parameter_GM_Spherical(only_show_once, ax_num, ax_num1):
     ax_num1.set_xlabel('X')  
     ax_num1.set_ylabel('Y')  
     ax_num1.set_zlabel('Z')  
-    ax_num.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0 ） 
-    ax_num1.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0 ）   
+    ax_num.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0 
+    ax_num1.view_init(elev=0, azim=5)                # ax_num.view_init(elev=20, azim=0 
 
     if not only_show_once :      
         # plt.savefig(str(frame)+".png")
@@ -321,13 +321,11 @@ def count(list):           #Return the different elements in the list and their 
             corresponding_num[Index] += 1 
     return no_repeat_list, corresponding_num
 
-#输入周围点的语义列表和对应的距离列表
-#输出  语义种类列表，对应的语义个数列表，各语义的平均距离列表
+#Input the list of semantics for surrounding points and the corresponding list of distances
+#Output the list of semantic types, the corresponding list of the number of each semantic type, and the list of average distances for each semantic type
 def count_new(semantic_list, distance_list):   
-    # 统计语义的颜色列表
     unique_semantics_list, counts_list = count(semantic_list)
     counts_list = counts_list[:len(unique_semantics_list)]
-    # 计算语义的个数和语义距离的平均值
     num_semantics = len(unique_semantics_list)
     mean_distances_list = []
     for s in unique_semantics_list:
@@ -359,7 +357,6 @@ def similarity_dot_compare(no_repeat_class_src, corresponding_sem_feature_src, n
 def show_vertexs_and_systems(vertexs,origin, z_axis, y_axis, x_axis, origin_2):
     vertexs_src_array = np.array(vertexs)
     points_xyz = vertexs_src_array[:,:3]
-    #有些颜色显示不出来，需要颜色归一化
     points_rgb = vertexs_src_array[:,3:6]
     # Create an Open3D point cloud object from the numpy array
     point_cloud_0 = o3d.geometry.PointCloud()
@@ -368,18 +365,15 @@ def show_vertexs_and_systems(vertexs,origin, z_axis, y_axis, x_axis, origin_2):
     vis_src_list = [point_cloud_0]
     
     
-    # 创建坐标系的几何体
     # origin_geom = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.5, origin=origin)
     axis_geom = o3d.geometry.LineSet()
-
-    # 设置顶点和线索引   
+ 
     extened_f =10
     axis_geom.points = o3d.utility.Vector3dVector([origin, origin + extened_f * x_axis, origin, origin + extened_f * y_axis, origin, origin + extened_f * z_axis])
     axis_geom.lines = o3d.utility.Vector2iVector([[0, 1], [2, 3], [4, 5]])
 
-    # 设置线的颜色和线宽
-    axis_geom.colors = o3d.utility.Vector3dVector([[1, 0, 0], [0, 1, 0], [0, 0, 1]])  # 设置 x、y、z 轴的颜色
-    # axis_geom.line_width = 5.0  # 设置线宽为 5
+    axis_geom.colors = o3d.utility.Vector3dVector([[1, 0, 0], [0, 1, 0], [0, 0, 1]])  
+    # axis_geom.line_width = 5.0  
     # vis_src_list.append (origin_geom) 
     vis_src_list.append(axis_geom)
     
@@ -387,26 +381,23 @@ def show_vertexs_and_systems(vertexs,origin, z_axis, y_axis, x_axis, origin_2):
     origin = np.array([origin])
     
     point_origin.points = o3d.utility.Vector3dVector(origin)
-    point_origin.paint_uniform_color([1, 0, 0])  # 将点的颜色设置为红色
+    point_origin.paint_uniform_color([1, 0, 0]) 
     point_origin_2 = o3d.geometry.PointCloud()
     origin_2 = np.array([origin_2])
     print(origin, origin_2)
     point_origin_2.points = o3d.utility.Vector3dVector(origin_2)
-    point_origin_2.paint_uniform_color([1, 0, 0])  # 将点的颜色设置为红色
+    point_origin_2.paint_uniform_color([1, 0, 0])  
     vis_src_list.append(point_origin)
     vis_src_list.append(point_origin_2)
     
     o3d.visualization.draw_geometries(vis_src_list)
 
-#构建顶点的语义和语义距离 局部图特征     
-# 输入为顶点, 图  输出：顶点的语义和距离 局部图特征
+#Construct the semantics of vertices and semantic distances, and the local graph features   
 def extract_local_feature_of_vertex(point_src, vertexs_src):
     point_src_class_list  , dis1_point_src_list  =  most_near_class(point_src, vertexs_src)   # Returns the semantic class and average distance of the nearest vertices
     no_repeat_class_point_src, corresponding_num_point_src, corresponding_ave_distance = count_new(point_src_class_list, dis1_point_src_list)
     return corresponding_ave_distance, no_repeat_class_point_src, corresponding_num_point_src
 
-#判断两个顶点的语义和距离 局部图特征是否相似；低于相似阈值时 不构建顶点对   #
-# 输入为顶点的距离和语义特征  输出：True / False
 def compare_feature_of_two_vertexs(no_repeat_class_point_src, corresponding_seman_feature_point_src, no_repeat_class_point_query, corresponding_seman_feature_point_query):
     # #local feature of distances: comparison
     # if abs(dis1_point_src - dis2_point_query) > local_dis_feature_threshold_1:
@@ -418,8 +409,6 @@ def compare_feature_of_two_vertexs(no_repeat_class_point_src, corresponding_sema
     
     return True
 
-#找列表中最大和第二大所有元素的下标
-#输出：最大值，最大值下标，第二大值，第二大的下标
 def find_max_second_max_indices(lst):
     max_val = 0
     second_max_val = 0
@@ -459,7 +448,6 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         '''Construct vertex pairs with the same semantics in two vertex graphs'''  
         
         #many-to-many 
-        start_time = time.perf_counter()
         most_num_true_vertex_pair = 0  #Maximum number of vertex pairs that may be correct
 
         # #为每个顶点局部图特征
@@ -472,26 +460,23 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         #     local_sem_feature_normalized = w1*local_sem_feature_dis_normalized + w2*local_sem_feature_num_normalized
         #     local_sem_feature_lis_query.append(local_sem_feature_normalized); local_sem_feature_class_lis_query.append(local_sem_feature_class)
 
-        end_time = time.perf_counter()
-        # print("432: ",end_time-start_time,"s")
+
+
             
-        start_time = time.perf_counter()
-        #顶点的顺序是语义RGB的顺序
+        
         for common_RGB in common_RGB_sort:        
             index_vertexs_src = [index  for index, RGB_value in enumerate(RGBlist_src) if RGB_value == common_RGB]   
             index_vertexs_query = [index  for index, RGB_value in enumerate(RGBlist_query) if RGB_value == common_RGB]
             # print(index_vertexs_src, index_vertexs_query)
             most_num_true_vertex_pair = most_num_true_vertex_pair + min( len(index_vertexs_src), len(index_vertexs_query) )
 
-            #构建匹配对
+            #Construct matching pairs
             for i in index_vertexs_src:
                 for j in index_vertexs_query:
-                    #判断两个点的局部特征是否相似------>构建匹配对与否
+                    #Determine whether the local features of two points are similar ---> Construct matching pairs or not
                     if compare_feature_of_two_vertexs(local_sem_feature_class_lis_src[i],local_sem_feature_lis_src[i],
                                                        local_sem_feature_class_lis_query[j], local_sem_feature_lis_query[j]) == True:
                         vertex_pairs.append([i,j])
-        end_time = time.perf_counter()
-        # print("446: ",end_time-start_time,"s")
         # if vertex_pairs != []:
         #     print(vertex_pairs)
         # print('most_num_true_vertex_pair: ', most_num_true_vertex_pair)
@@ -508,7 +493,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         global spatial_consistency_threhold
         # two_stage_spatial_consistency_matrix = matrix( len(vertex_pairs), len(vertex_pairs), 0)
         
-        start_time = time.perf_counter()
+
         #first order spatial_consistency
         for i  in range( len(vertex_pairs) ):                              #pair_1_index_src , pair_1_index_query ;   pair_2_index_src ；  pair_2_index_query 
             for j in range((i+1),len(vertex_pairs)):
@@ -525,8 +510,6 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
                     # one_stage_spatial_consistency_matrix[j][i] = 1
                     consistent_list_row.append(i)   
                     consistent_list_col.append(j)
-        end_time = time.perf_counter()
-        # print("480: ",end_time-start_time,"s")
         
         # print(consistent_list_row, consistent_list_col)
         if len(consistent_list_row) == 0:
@@ -546,42 +529,25 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         consistent_list_col_row = consistent_list_col + consistent_list_row
         consistent_list_row_col = np.array(consistent_list_row_col)
         consistent_list_col_row = np.array(consistent_list_col_row)
-        start_time = time.perf_counter()
         
-        #caluculate two_order_spatial_consistency_matrix values       构建二阶占主要时间
+        #caluculate two_order_spatial_consistency_matrix values       
         for index_ in range(len(consistent_list_row)):          #( consistent_list_row[index_], consistent_list_col[index_] ) record the position of element =1  in one_stage_spatial_consistency matrix
             current_row_1 = consistent_list_row[index_]  ;   current_row_1_corresponding_consistent_col = []
             current_row_2 = consistent_list_col[index_] ;  current_row_2_corresponding_consistent_col = []
             
-            #新的二阶矩阵生成方法
+            #second order matrix
             current_row_1_corresponding_consistent_col = consistent_list_col_row[consistent_list_row_col == current_row_1]
             current_row_2_corresponding_consistent_col = consistent_list_col_row[consistent_list_row_col == current_row_2]
-            # print(current_row_1_corresponding_consistent_col)   #打印也会花时间
+            # print(current_row_1_corresponding_consistent_col)   
             # print(np.intersect1d(current_row_1_corresponding_consistent_col, current_row_2_corresponding_consistent_col).size)
             two_stage_spatial_consistency_list.append(np.intersect1d(current_row_1_corresponding_consistent_col, current_row_2_corresponding_consistent_col).size )
             
-            #原先二阶矩阵生成方法
-            # for index_1 in [i for i, x in enumerate(consistent_list_row_col) if x == current_row_1]:
-            #     current_row_1_corresponding_consistent_col.append(consistent_list_col_row[index_1])
-            # for index_2 in [i for i, x in enumerate(consistent_list_row_col) if x == current_row_2]:
-            #     current_row_2_corresponding_consistent_col.append(consistent_list_col_row[index_2])
 
-            # tem_two_stage_value = 0
-            # for i in current_row_1_corresponding_consistent_col:
-            #     if i in current_row_2_corresponding_consistent_col:
-            #         tem_two_stage_value +=1
-            # two_stage_spatial_consistency_list.append(tem_two_stage_value)
-        end_time = time.perf_counter()
-        # print("516: ",end_time-start_time,"s")
-        
-        start_time = time.perf_counter()
-        #find the max one in two_order_spatial_consistency_matrix values   方法1
-        # 处理一下二阶矩阵，两点如果离得太近，直接二阶矩阵值为0----->即不参与竞选
+        #find the max one in two_order_spatial_consistency_matrix values   
         
         
         max_in_two_stage_spatial_consistency_list = 0 ; row =[] ; col =[]
         for index_ in range(len(two_stage_spatial_consistency_list)):
-            #排除距离过近的两个点
             vertex_for_src_1 = vertexs_src[vertex_pairs[consistent_list_row[index_]][0] ][0:3] ;     vertex_for_src_2 = vertexs_src[vertex_pairs[ consistent_list_col[index_]][0]][0:3]
             vertex_for_src_1 = np.array(vertex_for_src_1);              vertex_for_src_2 = np.array(vertex_for_src_2)
             if np.linalg.norm(vertex_for_src_1 - vertex_for_src_2) < max_two_stage_distance_thres :
@@ -607,8 +573,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
             print("max_in_two_stage_spatial_consistency_list = 0 or 1")
             return -1
         print("numbers of max two stage matrix value: ",len(row))        
-        end_time = time.perf_counter()
-        # print("535: ",end_time-start_time,"s")
+
         
         #find all max and second max values in two_order_spatial_consistency_matrix values   
         # max_in_two_stage_spatial_consistency_list, max_indies, second_max_val, second_max_indies  = find_max_second_max_indices(two_stage_spatial_consistency_list)
@@ -620,7 +585,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         #     print("max_or_second_max_in_two_stage_spatial_consistency_list = 0 or 1")
         #     return -1
         # merged_max_indies_in_two_stage = max_indies + second_max_indies
-        #     #去除merged_max_indies_in_two_stage中相距过近的两点------->会使球坐标系偏差大，影响P3的值   filtered_merged_max_indies_in_two_stage
+        #     
         # flag_lst = []
         # for i in merged_max_indies_in_two_stage:
         #     vertex_for_src_1 = vertexs_src[vertex_pairs[consistent_list_row[i]][0] ][0:3] ;     vertex_for_src_2 = vertexs_src[vertex_pairs[ consistent_list_col[i]][0]][0:3]
@@ -643,7 +608,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         
         # most_SC_index =row[0]
         # second_most_SC_index = col[0]
-        #search the most likely correct vertex pairs    方法2  计算几个二阶矩阵最大值  对应顶点对的一阶矩阵行和情况
+        #search the most likely correct vertex pairs   
         one_stage_row_sum_of_two_stage_max_lis = []
         for i in range(len(row)):
             row_i_sum = len(consistent_list_col_row[consistent_list_row_col == row[i]])
@@ -653,7 +618,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         most_SC_index = row[first_max_index]
         second_most_SC_index = col[first_max_index]
         
-        #search the most likely correct vertex pairs    方法1  计算几个二阶矩阵最大值 对应顶点对的局部图特征相似度 
+        #search the most likely correct vertex pairs    
         # similarity_score = 0
         # max_similarity_score = 0
         # for i in range(len(row)):
@@ -702,7 +667,7 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
         #         second_most_SC_index = col[i]
                 
         # ###########################---for--- end
-        # #这个应该也可以当成最终的评价指标
+        # 
         # # print(max_similarity_score)
         # if max_similarity_score == 0:
         #     f_GM_information.write("P2 0"+"\n")
@@ -722,7 +687,6 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
                 
         
         if not use_ground_normal:
-            # ? 获得原点和z轴
             '''origin, x, y ,z axis'''
             #origin  : most_SC_index，z axis ×  xaxis  = y axis
             vertex_for_original_src = vertexs_src[vertex_pairs[most_SC_index][0] ] ;     vertex_for_original_query = vertexs_query[vertex_pairs[most_SC_index][1]]             #origin
@@ -741,9 +705,8 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
             array_z_axis_src_unit = np.array(vector_z_axis_src  )                             #src unit z axis
             array_z_axis_query_unit = np.array(vector_z_axis_query)      #query unit z axis
             
-            # ? 构造一个处于y=z平面内的x轴，这个应该怎么取都行，然后叉乘构造y轴
                 #x axis : Perpendicular to z-axis
-            if array_z_axis_src_unit[0] != 0 :   # ? 这里又涉及了浮点数的比较，应该全部都会落入第一个if
+            if array_z_axis_src_unit[0] != 0 :   
                 vector_x_axis_src = [- ( array_z_axis_src_unit[1] + array_z_axis_src_unit[2] ) / array_z_axis_src_unit[0],1,1]
             elif array_z_axis_src_unit[1] != 0 :
                 vector_x_axis_src = [1, - ( array_z_axis_src_unit[0] + array_z_axis_src_unit[2] ) / array_z_axis_src_unit[1],1]
@@ -773,7 +736,6 @@ def GM_Spherical_plane(vertexs_src, vertexs_query, frame_src, frame_query, norma
             # print( angle(array_z_axis_src_unit, array_x_axis_src_unit) , angle(array_z_axis_src_unit, array_y_axis_src_unit) ,angle(array_y_axis_src_unit, array_x_axis_src_unit))
             # print( angle(array_z_axis_query_unit, array_x_axis_query_unit) , angle(array_z_axis_query_unit, array_y_axis_query_unit) ,angle(array_y_axis_query_unit, array_x_axis_query_unit))
 
-            # ? 将各顶点转换到各自的球坐标下，方便后边旋转
             #    r^2 = x^2 +y^2 +z^2 ; z = r*cos(theta) ; x=rsinθcosφ ；  y=rsinθsinφ
             spherical_parameters_src = [ ] ;    spherical_parameters_query = [ ]        
             
@@ -1092,73 +1054,6 @@ def main():
     vertexs_src = []
     point_num_threhold = 10     
 
-    if dataset_is_scenenet_209 == 1:
-        bag_name = "/media/tang/yujie2/dataset/train_0/train/scenenet0_209.bag"
-        bag = rosbag.Bag(bag_name, 'r')
-    ####################################
-        try:    
-            #src 
-
-            bag_data = bag.read_messages('/camera_point')
-            frame = -1
-            for topic, msg, t in bag_data:
-                frame = frame + 1
-                if src_frame == frame:
-                    #read point cloud
-                    lidar = pcl2.read_points(msg)
-                    points_frame = list(lidar)
-                    points_src = points_frame
-                    print("src: the "+str(frame)+"th frame")
-                    vertexs_src, vertexs_src_x_show , vertexs_src_y_show, vertexs_src_z_show, color_src_vertexs_show = get_vertex_pair(points_frame,frame,point_num_threhold)
-                    print("vertex:", len(vertexs_src))
-                    # print(vertexs_src)
-                    break
-            #query
-            bag_data = bag.read_messages('/camera_point')
-            frame = -1
-            for topic, msg, t in bag_data:
-                frame = frame + 1
-                print("the "+str(frame)+"th frame")
-                if if_search_specially_query_frame and  frame < query_frame_origin:  
-                    continue 
-                
-                #read point cloud
-                lidar = pcl2.read_points(msg)
-                points_frame = list(lidar)
-                
-                V, vertexs_query_x_show , vertexs_query_y_show, vertexs_query_z_show, color_query_vertexs_show = get_vertex_pair(points_frame,frame,point_num_threhold)
-                print("vertex:", len(V))
-
-            #----------------------------------------------------inner 'for' loop end--------------------------------------------------------#
-                '''visualization'''
-                if show_:
-                    if show_pointcloud:       
-                            points_query = points_frame
-                            down_sample_and_show(points_query,5,ax_query)
-                            down_sample_and_show(points_src,5,ax)
-                    if show_vertex_graph:
-                        show_vertexs_graph(vertexs_query_x_show, vertexs_query_y_show,vertexs_query_z_show, color_query_vertexs_show, src_flag =0, query_flag =1)
-                        show_vertexs_graph(vertexs_src_x_show , vertexs_src_y_show, vertexs_src_z_show, color_src_vertexs_show, src_flag =1, query_flag =0)
-                        
-                
-                '''grapg matching'''
-                if GM_switch == 1 and vertexs_src != [] and frame>=query_frame_origin:
-                    f_GM_information.write("the "+str(frame)+" frame query\n")
-                    start_time = time.perf_counter()
-                    first_remained_flag, common_RGB_perception = GM_first( vertexs_src, V, src_frame, frame)   
-                    print(first_remained_flag, common_RGB_perception)
-                    if first_remained_flag == 0:
-                        print("fail in the first filter part!  OUT!")
-                    GM_Spherical_plane( vertexs_src, V, src_frame, frame,1, 1, first_remained_flag, common_RGB_perception, use_ground_normal=False) 
-                    end_time = time.perf_counter()
-                    time_ =  end_time - start_time
-                    if show_:
-                        plot_ax_parameter_GM_Spherical(only_show_once, ax, ax_query)      
-                    print(time_,"s")
-        #---------------------------------------------------------------------------external 'for'  loop end--------------------------------------------------------------------------------------#
-        finally:
-            bag.close()
-
     if dataset_is_semantic_kitti == 1:
         curr_path = os.path.dirname(os.path.abspath(__file__))
         sk_preprocess = SKPreprocess(f"{curr_path}/../config/sk_preprocess.yaml")
@@ -1169,11 +1064,11 @@ def main():
             src_frame = 4486
             _, centers, semantics, src_normal = sk_preprocess.get_clustered_semantic_arary(0, src_frame)
             vertexs_src = np.hstack([centers, semantics]).tolist()
-            #为每个点提取局部图特征
+
             local_sem_feature_lis_src=[]; local_sem_feature_class_lis_src = []
             for vertex in vertexs_src:
                 local_sem_feature_dis, local_sem_feature_class, local_sem_feature_num = extract_local_feature_of_vertex(vertex, vertexs_src)
-                #归一化 与 加权合并
+                #Normalization and weighted merging
                 local_sem_feature_dis_normalized = np.array(local_sem_feature_dis) / np.sum(local_sem_feature_dis)
                 local_sem_feature_num_normalized = np.array(local_sem_feature_num) / np.sum(local_sem_feature_num)
                 local_sem_feature_normalized = w1*local_sem_feature_dis_normalized + w2*local_sem_feature_num_normalized
@@ -1182,11 +1077,11 @@ def main():
             query_frame = 1902
             _, centers, semantics, query_normal = sk_preprocess.get_clustered_semantic_arary(0, query_frame)
             vertexs_query = np.hstack([centers, semantics]).tolist()
-            #为每个点提取局部图特征
+            #Extract local graph features for each point.
             local_sem_feature_lis_query = []; local_sem_feature_class_lis_query = []
             for vertex in vertexs_query:
                 local_sem_feature_dis, local_sem_feature_class, local_sem_feature_num = extract_local_feature_of_vertex(vertex, vertexs_query)
-                #归一化 与 加权合并
+                #Normalization and weighted merging
                 local_sem_feature_dis_normalized = np.array(local_sem_feature_dis) / np.sum(local_sem_feature_dis)
                 local_sem_feature_num_normalized = np.array(local_sem_feature_num) / np.sum(local_sem_feature_num)
                 local_sem_feature_normalized = w1*local_sem_feature_dis_normalized + w2*local_sem_feature_num_normalized
@@ -1202,7 +1097,7 @@ def main():
                                 first_remained_flag, common_RGB_perception) 
 
         elif debug == 0:
-            #保存所有帧的vertexs，局部图特征, 地面法向量
+            
             frames_vertexs = []; frames_local_sem_feature_lis = []; frame_local_sem_feature_class_lis = []; frames_normal = []
             import glob
             frame_number = len(glob.glob(os.path.join("/media/zhong/JIA/Temp/kitti/05/sequences/05/velodyne/", "*.bin")))
@@ -1213,34 +1108,33 @@ def main():
                 vertexs = np.hstack([centers, semantics]).tolist()
                 frames_vertexs.append(vertexs)
                 frames_normal.append(normal)
-                #为每个点提取局部图特征
+                
                 local_sem_feature_lis = []  ;  local_sem_feature_class_lis = []
                 for vertex in vertexs:
                     local_sem_feature_dis, local_sem_feature_class, local_sem_feature_num = extract_local_feature_of_vertex(vertex, vertexs)
-                    #归一化 与 加权合并
+                    #Normalization and weighted merging
                     local_sem_feature_dis_normalized = np.array(local_sem_feature_dis) / np.sum(local_sem_feature_dis)
                     local_sem_feature_num_normalized = np.array(local_sem_feature_num) / np.sum(local_sem_feature_num)
                     local_sem_feature_normalized = w1*local_sem_feature_dis_normalized + w2*local_sem_feature_num_normalized
                     local_sem_feature_lis.append(local_sem_feature_normalized); local_sem_feature_class_lis.append(local_sem_feature_class)
                 frames_local_sem_feature_lis.append(local_sem_feature_lis);  frame_local_sem_feature_class_lis.append(local_sem_feature_class_lis)
             
-            #读取benchmark的frame_pair
-            file_path = "/home/zhong/SSGM/pairs/pairs_kitti/neg_100/05.txt"  # 替换成你的文件路径
+            #
+            file_path = "/home/zhong/SSGM/pairs/pairs_kitti/neg_100/05.txt"  # Replace with your file path
             with open(file_path, 'r') as file:
                 lines = file.readlines()
             frame_pairs = []
             for line in lines:
-                line = line.strip()  # 去除行尾的换行符
-                frame1, frame2, label = line.split()  # 按空格分割每行的三个数
+                line = line.strip()  # 
+                frame1, frame2, label = line.split()  # 
                 print(frame1, frame2, label)
-                frame1 = int(frame1.lstrip('0')) if frame1 != "000000" else 0  # 去除frame1前面的0，并转换为整数，"000000" 默认为0
-                frame2 = int(frame2.lstrip('0')) if frame2 != "000000" else 0  # 去除frame2前面的0，并转换为整数，"000000" 默认为0
-                label = int(label)  # 转换为整数
-                frame_pairs.append((frame1, frame2, label))  # 将提取的数据作为元组添加到列表中
+                frame1 = int(frame1.lstrip('0')) if frame1 != "000000" else 0  # 
+                frame2 = int(frame2.lstrip('0')) if frame2 != "000000" else 0  # 
+                label = int(label)  # 
+                frame_pairs.append((frame1, frame2, label))  # 
 
             
             for index in range(len(frame_pairs)):
-                start_time = time.perf_counter()
                 src_frame = frame_pairs[index][0]
                 query_frame = frame_pairs[index][1]
                 
@@ -1249,7 +1143,7 @@ def main():
                 vertexs_src = frames_vertexs[src_frame];  V = frames_vertexs[query_frame]
                 print("vertex src:", len(vertexs_src))
                 print("vertex query:", len(V))
-                #读取局部图特征
+                #
                 local_sem_feature_lis_src = frames_local_sem_feature_lis[src_frame]  ;  local_sem_feature_class_lis_src = frame_local_sem_feature_class_lis[src_frame]
                 local_sem_feature_lis_query = frames_local_sem_feature_lis[query_frame]  ;  local_sem_feature_class_lis_query = frame_local_sem_feature_class_lis[query_frame]
                 
@@ -1265,22 +1159,8 @@ def main():
                                     src_normal, query_normal,
                                     first_remained_flag, common_RGB_perception) 
                 
-                end_time = time.perf_counter()
-                time_ =  end_time - start_time
-                print("sum time is: ",time_,"s")
                 
-                import pose_estimation
-                # #1: 利用相似球坐标的顶点对 作为两个点云的correspondences，进行两片点云的位姿估计 
-                # vertex_indexs_for_pose_estimation = pose_estimation.filter_vp_w_simi_sphe(consistent_list_row_col, similar_spherical_index)
-                # if vertex_indexs_for_pose_estimation!=[]:
-                #     vertexs_for_pose_estimation = []
-                #     for index_value in vertex_indexs_for_pose_estimation:
-                #         vertexs_for_pose_estimation.append(np.array([vertexs_src[vertex_pairs[index_value][0]][0:3], V[vertex_pairs[index_value][1]][0:3]]))
-                #     pose_estimation.pose_transform(vertexs_for_pose_estimation)
                 
-                #2: 直接对两个坐标系做对齐，对齐过程中的变换矩阵 就是两片点云配准的变换矩阵
-                transformation_matrix = pose_estimation.transform_two_coordinate_system(z_axis_src, y_axis_src, x_axis_src, origin_src, origin_2_src, z_axis_query, y_axis_query, x_axis_query, origin_query, origin_2_query)
-
 if __name__ == "__main__":
     main()
 
