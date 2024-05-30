@@ -13,5 +13,7 @@ python src/SLOOP.py
 > src/data/icp_data : save the result file after pose refining.
 
 ## Dataset
-We provide the semantic kitti 07 dataset here.
+We provide the semantic kitti 07 dataset here: . Please save it in 'your dataset path'.
+
+change the 'dataset_path' in config/sk_preprocess.yaml to 'your dataset path'.
 
