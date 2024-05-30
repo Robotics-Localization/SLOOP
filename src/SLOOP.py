@@ -1120,7 +1120,7 @@ def main():
                 frames_local_sem_feature_lis.append(local_sem_feature_lis);  frame_local_sem_feature_class_lis.append(local_sem_feature_class_lis)
             
             #
-            file_path = "/home/zhong/SSGM/pairs/pairs_kitti/neg_100/05.txt"  # Replace with your file path
+            file_path = "pairs_kitti/neg_100_07.txt"  # Replace with your file path
             with open(file_path, 'r') as file:
                 lines = file.readlines()
             frame_pairs = []
