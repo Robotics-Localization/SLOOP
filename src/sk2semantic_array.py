@@ -23,7 +23,7 @@ class SKPreprocess:
     def update_seq_path(self):
         self.curr_seq_path_ = "/".join(
             [
-                self.config_["dataset_path_2"],        #dataset_path
+                self.config_["dataset_path"],        #dataset_path
                 "sequences",
                 f"{self.config_['seq_list'][self.curr_seq_idx_]:02d}",
             ]
