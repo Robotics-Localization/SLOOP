@@ -1,6 +1,9 @@
 # SLOOP
 ## File Description
 > src/SLOOP.py : main code
+
+Change the dataset path  in line 1103 of SLOOP.py before running SLOOP.py.
+
 ```sh
 python src/SLOOP.py
 ```
